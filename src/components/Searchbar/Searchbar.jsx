@@ -5,23 +5,23 @@ export class Searchbar extends React.Component {
     name: '',
   };
 
-    handleNameChange = event => {
-        const { name, value } = event.currentTarget;
-    this.setState({ [name] : value.toLowerCase() });
-    };
-    
-    handleSubmit = event => {
-        event.preventDefault();
-        if (this.state.name.trim() === '') {
-            alert('STOP')
-            return;
-        }
-        this.props.onSubmit(this.state.name);
-        this.reset();
+  handleNameChange = event => {
+    const { name, value } = event.currentTarget;
+    this.setState({ [name]: value.toLowerCase() });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    if (this.state.name.trim() === '') {
+      alert('STOP');
+      return;
     }
-    reset = () => {
-        this.setState({name: ''})
-    }
+    this.props.onSubmit(this.state.name);
+    this.reset();
+  };
+  reset = () => {
+    this.setState({ name: '' });
+  };
   render() {
     return (
       <header className="searchbar">
@@ -32,8 +32,8 @@ export class Searchbar extends React.Component {
 
           <input
             className="input"
-                    type="text"
-                    name='name'
+            type="text"
+            name="name"
             value={this.state.name}
             onChange={this.handleNameChange}
             autoComplete="off"

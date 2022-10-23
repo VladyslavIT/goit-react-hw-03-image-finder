@@ -1,25 +1,21 @@
 import React from 'react';
-import axios from 'axios';
 
 import { Searchbar } from '../Searchbar/Searchbar';
 import { ImageGalley } from '../ImageGallery/ImageGallery';
-import { Loader } from 'components/Loader/Loader';
-import { Modal } from 'components/Modal/Modal';
+
 export class App extends React.Component {
   state = {
     findName: '',
-    loading: false,
   };
 
   formSubmit = name => {
-    this.setState({ findName: name, loading: true });
+    this.setState({ findName: name });
   };
 
   render() {
     return (
       <div>
         <Searchbar onSubmit={this.formSubmit} />
-         {this.state.loading && <Loader /> } 
         <ImageGalley nameGallery={this.state.findName} />
       </div>
     );

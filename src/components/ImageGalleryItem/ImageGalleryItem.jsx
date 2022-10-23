@@ -13,8 +13,8 @@ class ImageGalleryItem extends React.Component {
   };
 
   render() {
-    const { image } = this.props;
-    return image.map(({ id, webformatURL, largeImageURL, tags }) => (
+    const { id, webformatURL, largeImageURL, tags } = this.props;
+    return (
       <li onClick={this.toggleModal} key={id}>
         <img src={webformatURL} alt={tags} />
         {this.state.showModal && (
@@ -23,7 +23,7 @@ class ImageGalleryItem extends React.Component {
           </Modal>
         )}
       </li>
-    ));
+    );
   }
 }
 export { ImageGalleryItem };
