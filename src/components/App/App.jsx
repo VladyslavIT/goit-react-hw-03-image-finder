@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
@@ -26,10 +25,6 @@ import { Container } from './App.styled';
     );
   }
 };
-
-App.propTypes = {
-  name: PropTypes.string.isRequired
-}
 
 export { App };
 
