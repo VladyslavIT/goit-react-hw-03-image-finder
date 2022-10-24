@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { createPortal } from 'react-dom';
 import { ModalOverlay, ModalWiev } from './Modal.styled';
+
 
 const modal = document.querySelector('#modal');
 
@@ -37,4 +40,10 @@ class Modal extends React.Component {
     );
   }
 }
+
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired
+}
+
 export { Modal };

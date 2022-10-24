@@ -1,7 +1,8 @@
 import { Puff } from 'react-loader-spinner';
+import { LoaderThumb } from './Loader.styled';
 
 const Loader = () => (
-  <div>
+  <LoaderThumb>
     <Puff
       height="80"
       width="80"
@@ -12,7 +13,7 @@ const Loader = () => (
       wrapperClass=""
       visible={true}
     />
-  </div>
+  </LoaderThumb>
 );
 
 export { Loader };

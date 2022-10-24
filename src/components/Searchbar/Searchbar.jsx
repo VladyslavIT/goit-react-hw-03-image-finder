@@ -1,6 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export class Searchbar extends React.Component {
+import { SearchHeader } from './Searchbar.styled';
+import { SearchForm } from './Searchbar.styled';
+import { SearchButton } from './Searchbar.styled';
+import { SearchInput } from './Searchbar.styled';
+import { BiSearchAlt } from 'react-icons/bi';
+
+ class Searchbar extends React.Component {
   state = {
     name: '',
   };
@@ -24,13 +31,13 @@ export class Searchbar extends React.Component {
   };
   render() {
     return (
-      <header className="searchbar">
-        <form className="form" onSubmit={this.handleSubmit}>
-          <button type="submit" className="button">
-            <span className="button-label">Search</span>
-          </button>
+      <SearchHeader>
+        <SearchForm onSubmit={this.handleSubmit}>
+          <SearchButton type="submit">
+            <BiSearchAlt className="icon">Search</BiSearchAlt>
+          </SearchButton>
 
-          <input
+          <SearchInput
             className="input"
             type="text"
             name="name"
@@ -40,8 +47,14 @@ export class Searchbar extends React.Component {
             autoFocus
             placeholder="Search images and photos"
           />
-        </form>
-      </header>
+        </SearchForm>
+      </SearchHeader>
     );
   }
+};
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired
 }
+
+export { Searchbar };

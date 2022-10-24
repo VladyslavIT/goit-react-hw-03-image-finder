@@ -1,9 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 import { Searchbar } from '../Searchbar/Searchbar';
-import { ImageGalley } from '../ImageGallery/ImageGallery';
+import { ImageGallery } from '../ImageGallery/ImageGallery';
+import { Container } from './App.styled';
 
-export class App extends React.Component {
+ class App extends React.Component {
   state = {
     findName: '',
   };
@@ -14,13 +18,19 @@ export class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <Searchbar onSubmit={this.formSubmit} />
-        <ImageGalley nameGallery={this.state.findName} />
-      </div>
+        <ImageGallery nameGallery={this.state.findName} />
+        <ToastContainer autoClose={2000} />
+      </Container>
     );
   }
+};
+
+App.propTypes = {
+  name: PropTypes.string.isRequired
 }
 
-//------ key 29531020-3b97d8056313c52b7859c1bca
-// react tostify
+export { App };
+
+

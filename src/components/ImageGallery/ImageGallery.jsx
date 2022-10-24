@@ -1,11 +1,15 @@
 import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Loader } from 'components/Loader/Loader';
 import { Button } from 'components/Button/Button';
+import { ImageGalley } from './ImageGallary.styled';
 
-export class ImageGalley extends React.Component {
+ class ImageGallery extends React.Component {
   state = {
     image: [],
     loading: false,
@@ -23,7 +27,6 @@ export class ImageGalley extends React.Component {
       prevState.page !== this.state.page
     ) {
       this.setState({ loading: true });
-      console.log(this.state.page);
       try {
         const response = await axios.get(this.BASE_URL, {
           params: {
@@ -35,18 +38,38 @@ export class ImageGalley extends React.Component {
             page: this.state.page,
           },
         });
-        this.setState(prevState => ({
-          image: [...prevState.image, ...response.data.hits],
-          loading: false,
-          status: 'resolve',
-        }));
-        console.log(this.state);
-        console.log(response.data.hits);
+        if (response.data.hits.length === 0) {
+          toast.error('Nothing as requested, please try another word');
+          this.setState({
+            image: [],
+            loading: false,
+            status: 'pending',
+          });
+          return;
+        }
+        if (prevProps.nameGallery !== this.props.nameGallery) {
+          this.setState({
+            image: [...response.data.hits],
+            loading: false,
+            status: 'resolve',
+            page: 1,
+          });
+          toast.success('Successful search');
+        }
+        if (prevState.page !== this.state.page) {
+          this.setState(prevState => ({
+            image: [...prevState.image, ...response.data.hits],
+            loading: false,
+            status: 'resolve',
+          }));
+        }
       } catch (error) {
         this.setState({ status: 'rejected' });
+        toast.error('Oops, something went wrong');
       }
     }
   }
+
   loadMore = () => {
     this.setState(prevState => ({
       page: prevState.page + 1,
@@ -55,7 +78,7 @@ export class ImageGalley extends React.Component {
 
   render() {
     const hits = this.state.image;
-    console.log(hits);
+
     if (this.state.status === 'rejected') {
       return <p> {this.state.error}</p>;
     }
@@ -66,20 +89,27 @@ export class ImageGalley extends React.Component {
 
     if (this.state.status === 'resolve') {
       return (
-        <ul className="gallery">
-          {hits.map(({ id, webformatURL, largeImageURL, tags }) => (
-            <ImageGalleryItem
-              key={id}
-              webformatURL={webformatURL}
-              largeImageURL={largeImageURL}
-              tags={tags}
-            />
-          ))}
-
-          <Button onClick={this.loadMore} />
-        </ul>
+        <>
+          <ImageGalley>
+            {hits.map(({ id, webformatURL, largeImageURL, tags }) => (
+              <ImageGalleryItem
+                key={id}
+                webformatURL={webformatURL}
+                largeImageURL={largeImageURL}
+                tags={tags}
+              />
+            ))}
+            <ToastContainer />
+          </ImageGalley>
+          {this.state.image ? <Button onClick={this.loadMore} /> : <></>}
+        </>
       );
     }
-    return <div></div>;
   }
 }
+
+ImageGallery.propTypes = {
+  nameGallery: PropTypes.string.isRequired
+}
+
+export { ImageGallery };
