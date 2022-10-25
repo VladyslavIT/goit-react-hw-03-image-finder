@@ -110,29 +110,4 @@ ImageGallery.propTypes = {
 
 export { ImageGallery };
 
-// if (this.state.status === 'rejected') {
-//   return <p> {this.state.error}</p>;
-// }
 
-// if (this.state.loading) {
-//   return <Loader />;
-// }
-
-// if (this.state.status === 'resolve') {
-//   return (
-//     <>
-//       <ImageGalley>
-//         {hits.map(({ id, webformatURL, largeImageURL, tags }) => (
-//           <ImageGalleryItem
-//             key={id}
-//             webformatURL={webformatURL}
-//             largeImageURL={largeImageURL}
-//             tags={tags}
-//           />
-//         ))}
-//         <ToastContainer />
-//       </ImageGalley>
-//       {this.state.image ? <Button onClick={this.loadMore} /> : <></>}
-//     </>
-//   );
-// }
