@@ -9,7 +9,7 @@ import { Loader } from 'components/Loader/Loader';
 import { Button } from 'components/Button/Button';
 import { ImageGalley } from './ImageGallary.styled';
 
- class ImageGallery extends React.Component {
+class ImageGallery extends React.Component {
   state = {
     image: [],
     loading: false,
@@ -77,21 +77,15 @@ import { ImageGalley } from './ImageGallary.styled';
   };
 
   render() {
-    const hits = this.state.image;
+    const { image, status, loading, error } = this.state;
 
-    if (this.state.status === 'rejected') {
-      return <p> {this.state.error}</p>;
-    }
-
-    if (this.state.loading) {
-      return <Loader />;
-    }
-
-    if (this.state.status === 'resolve') {
-      return (
-        <>
+    return (
+      <>
+        {status === 'rejected' && <p> {error}</p>}
+        {loading && <Loader />}
+        {status === 'resolve' && (
           <ImageGalley>
-            {hits.map(({ id, webformatURL, largeImageURL, tags }) => (
+            {image.map(({ id, webformatURL, largeImageURL, tags }) => (
               <ImageGalleryItem
                 key={id}
                 webformatURL={webformatURL}
@@ -101,15 +95,42 @@ import { ImageGalley } from './ImageGallary.styled';
             ))}
             <ToastContainer />
           </ImageGalley>
-          {this.state.image ? <Button onClick={this.loadMore} /> : <></>}
-        </>
-      );
-    }
+        )}
+        {image.length > 0 && <Button onClick={this.loadMore} />}
+      </>
+    );
   }
 }
 
 ImageGallery.propTypes = {
-  nameGallery: PropTypes.string.isRequired
-}
+  nameGallery: PropTypes.string.isRequired,
+};
 
 export { ImageGallery };
+
+// if (this.state.status === 'rejected') {
+//   return <p> {this.state.error}</p>;
+// }
+
+// if (this.state.loading) {
+//   return <Loader />;
+// }
+
+// if (this.state.status === 'resolve') {
+//   return (
+//     <>
+//       <ImageGalley>
+//         {hits.map(({ id, webformatURL, largeImageURL, tags }) => (
+//           <ImageGalleryItem
+//             key={id}
+//             webformatURL={webformatURL}
+//             largeImageURL={largeImageURL}
+//             tags={tags}
+//           />
+//         ))}
+//         <ToastContainer />
+//       </ImageGalley>
+//       {this.state.image ? <Button onClick={this.loadMore} /> : <></>}
+//     </>
+//   );
+// }

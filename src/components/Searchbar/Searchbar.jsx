@@ -6,6 +6,7 @@ import { SearchForm } from './Searchbar.styled';
 import { SearchButton } from './Searchbar.styled';
 import { SearchInput } from './Searchbar.styled';
 import { BiSearchAlt } from 'react-icons/bi';
+import { toast } from 'react-toastify';
 
  class Searchbar extends React.Component {
   state = {
@@ -20,15 +21,13 @@ import { BiSearchAlt } from 'react-icons/bi';
   handleSubmit = event => {
     event.preventDefault();
     if (this.state.name.trim() === '') {
-      alert('STOP');
+      toast.info('Please enter keyword');
       return;
     }
     this.props.onSubmit(this.state.name);
-    this.reset();
+   
   };
-  reset = () => {
-    this.setState({ name: '' });
-  };
+ 
   render() {
     return (
       <SearchHeader>
