@@ -16,6 +16,7 @@ class ImageGallery extends React.Component {
     error: null,
     status: 'idle',
     page: 1,
+    total: null
   };
 
   BASE_URL = 'https://pixabay.com/api/';
@@ -53,6 +54,7 @@ class ImageGallery extends React.Component {
             loading: false,
             status: 'resolve',
             page: 1,
+            total: response.data.total
           });
           toast.success('Successful search');
         }
@@ -77,7 +79,7 @@ class ImageGallery extends React.Component {
   };
 
   render() {
-    const { image, status, loading, error } = this.state;
+    const { image, status, loading, error, total} = this.state;
 
     return (
       <>
@@ -96,7 +98,7 @@ class ImageGallery extends React.Component {
             <ToastContainer />
           </ImageGalley>
         )}
-        {image.length > 0 && <Button onClick={this.loadMore} />}
+        {image.length > 0 && image.length !== total ? <Button onClick={this.loadMore} /> : <></> }
       </>
     );
   }
